@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <div t-name="stock.calculate_lot_dialog">
+        <Dialog title="'Calculation of Lot/Package'" size="'md'">
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <strong>Total Quantity:</strong> 
+                            <t t-esc="props.move.data.product_uom_qty || 0"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot No. and Qty/Lot -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Lot No.</label>
+                            <input type="text" class="form-control" 
+                                   t-model="state.lotNumber"
+                                   placeholder="e.g., LOT001"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Qty/Lot</label>
+                            <input type="number" class="form-control" 
+                                   t-model="state.qtyPerLot"
+                                   min="1"
+                                   step="1"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expiry Date & Time + Manufacturing Date -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Expiry Date &amp; Time</label>
+                            <input type="datetime-local" class="form-control" 
+                                   t-model="state.expiryDateTime"
+                                   step="60"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Manufacturing Date</label>
+                            <input type="date" class="form-control" 
+                                   t-model="state.manufacturingDate"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination Package Name -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Destination Package Name</label>
+                            <input type="text" class="form-control" 
+                                   t-model="state.packageName"
+                                   placeholder="e.g., PACK001"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+
+                <!-- Calculate Button -->
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn w-100"
+                                t-att-class="state.copied ? 'btn-success' : 'btn-primary'"
+                                t-on-click="_onCalculate"
+                                t-att-disabled="state.copied">
+                            <t t-if="state.copied">
+                                <i class="fa fa-check me-2"/> Copied!
+                            </t>
+                            <t t-else="">
+                                <i class="fa fa-calculator me-2"/> Calculate &amp; Copy to Clipboard
+                            </t>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Dialog>
+    </div>
+
+    <div t-name="stock.CalculateLot">
+        <button class="btn btn-link btn-group" t-on-click="openDialog">
+            Calculation of Lot/Package
+        </button>
+    </div>
+</templates>
